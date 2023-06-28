@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Portal Investasi Berbasis Spasial</title>
+    <!-- MAPBOX CSS CDN -->
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+
+    <!-- STYLE CDN -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/2.5.0/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      rel="stylesheet"
+    />
+
+    <!-- CSS LOKAL -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="img/favicon.ico" />
+  </head>
+  <body>
+    <div class="container-map">
+      <!-- RENDER MAPBOX INSIDE CONTAINER -->
+
+      <div id="map" class="wm-map mapboxgl-map">
+        <!-- FLOATING SIDEBAR -->
+        <div class="wm-cards wm-cards-left" style="overflow-y: hidden">
+          <div class="card" style="pointer-events: all; overflow-y: scroll">
+            <div
+              class="card-header p-0"
+              data-toggle="collapse"
+              href="#collapseTop"
+              role="button"
+            >
+              <div class="text-center pt-2 pb-2">
+                <img
+                  src="/img/jkt.png"
+                  width="45px"
+                  style="margin-right: 10px"
+                />
+                <span class="txtHeadNav" data-t=""
+                  >Peta Tata Ruang DKI Jakarta</span
+                >
+                <!-- <span class="txtHeadNav2" data-t>front.a.subapptitle</span> -->
+              </div>
+            </div>
+            <div class="card-body p-2 panel">
+              <div class="form-group w-100">
+                <!-- SearchBox -->
+                <div>
+                  <input
+                    type="text"
+                    class="wm-search form-control is-editable is-blank"
+                    id="cari_wilayah"
+                    placeholder="Cari wilayah disini..."
+                  />
+                </div>
+
+                <!-- Suggestion Box -->
+                <div class="wm-search__dropdown-container">
+                  <div class="wm-search-dropdown">
+                    <ul class="wm-search__dropdown" role="listbox"></ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group w-100 mt-3">
+                <!-- List Menu -->
+                <div id="menus">
+                  <div class="d-flex flex-column">
+                    <!-- Check Wilayah -->
+                    <div class="p-2">
+                      <div class="form-check wilayah">
+                        <input
+                          id="wilayah"
+                          name="wilayah"
+                          class="form-check-input mt-1"
+                          type="checkbox"
+                          onchange=""
+                          checked=""
+                        /><label for="wilayah" class="form-check-label"
+                          >Wilayah</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Check Zonasi -->
+                    <div class="p-2">
+                      <div class="form-check">
+                        <input
+                          id="zonasi"
+                          name="zonasi"
+                          class="form-check-input mt-1"
+                          type="checkbox"
+                          onchange=""
+                          checked=""
+                        /><label for="zonasi" class="form-check-label"
+                          >Zonasi</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Check Persil -->
+                    <div class="p-2">
+                      <div class="form-check persil">
+                        <input
+                          id="persil"
+                          name="persil"
+                          class="form-check-input mt-1"
+                          type="checkbox"
+                          onchange=""
+                        /><label for="persil" class="form-check-label"
+                          >Persil</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Check Transect -->
+                    <div class="p-2">
+                      <div class="form-check">
+                        <input
+                          id="transect"
+                          name="transect"
+                          class="form-check-input mt-1"
+                          type="checkbox"
+                          onchange=""
+                        /><label for="transect" class="form-check-label"
+                          >Transect Zone Tahun 2023</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End List Menu -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MENU LEGEND -->
+        <div class="legend-urban" style="display: none">
+          <div class="ml-2">
+            <div>
+              <span class="legend-key" style="background: #70a800"></span
+              ><span style="font-size: 12px; font-weight: bold"
+                >TP-1 (Natural)</span
+              >
+            </div>
+            <div>
+              <span class="legend-key" style="background: #ffff00"></span
+              ><span style="font-size: 12px; font-weight: bold"
+                >TP-2 (Kampung)</span
+              >
+            </div>
+            <div>
+              <span class="legend-key" style="background: #ffaa00"></span
+              ><span style="font-size: 12px; font-weight: bold"
+                >TP-3 (Sub-Urban)</span
+              >
+            </div>
+            <div>
+              <span class="legend-key" style="background: #ff5500"></span
+              ><span style="font-size: 12px; font-weight: bold"
+                >TP-4 (Urban)</span
+              >
+            </div>
+            <div>
+              <span class="legend-key" style="background: #ffbebe"></span
+              ><span style="font-size: 12px; font-weight: bold"
+                >TP-5 (Urban Center)</span
+              >
+            </div>
+            <div>
+              <span class="legend-key" style="background: #e60000"></span
+              ><span style="font-size: 12px; font-weight: bold"
+                >TP-6 (Urban Core)</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.2/mapbox-gl-draw.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"></script>
+
+    <!-- SCRIPT LOKAL -->
+    <script src="js/bindWithDelay.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
